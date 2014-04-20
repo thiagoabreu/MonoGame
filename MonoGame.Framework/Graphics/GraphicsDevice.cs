@@ -128,19 +128,19 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal GraphicsDevice(GraphicsDeviceInformation gdi)
         {
-            SetupGL();
             if (gdi.PresentationParameters == null)
                 throw new ArgumentNullException("presentationParameters");
             PresentationParameters = gdi.PresentationParameters;
+            SetupGL();
             GraphicsProfile = gdi.GraphicsProfile;
             Initialize();
         }
 
         internal GraphicsDevice ()
 		{
-            SetupGL();
             PresentationParameters = new PresentationParameters();
             PresentationParameters.DepthStencilFormat = DepthFormat.Depth24;
+            SetupGL();
             Initialize();
         }
 
@@ -158,8 +158,8 @@ namespace Microsoft.Xna.Framework.Graphics
             Adapter = adapter;
             if (presentationParameters == null)
                 throw new ArgumentNullException("presentationParameters");
-            SetupGL();
             PresentationParameters = presentationParameters;
+            SetupGL();
             GraphicsProfile = graphicsProfile;
             Initialize();
         }
