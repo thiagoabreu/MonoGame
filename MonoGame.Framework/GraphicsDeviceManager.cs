@@ -284,6 +284,8 @@ namespace Microsoft.Xna.Framework
 
 #elif WINDOWS || LINUX
             _game.ResizeWindow(false);
+            _graphicsDevice.Context.SwapInterval =
+                _graphicsDevice.PresentationParameters.PresentationInterval.GetSwapInterval();
 #elif MONOMAC
             _graphicsDevice.PresentationParameters.IsFullScreen = _wantFullScreen;
 
