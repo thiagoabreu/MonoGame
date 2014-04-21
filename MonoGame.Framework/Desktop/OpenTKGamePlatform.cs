@@ -76,6 +76,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Input;
 
+using OpenTK.Graphics;
+
 namespace Microsoft.Xna.Framework
 {
     class OpenTKGamePlatform : GamePlatform
@@ -90,12 +92,16 @@ namespace Microsoft.Xna.Framework
         {
             get
             {
-                return _view.Window.VSync == OpenTK.VSyncMode.On ? true : false;
+                var context = GraphicsContext.CurrentContext;
+                return context != null && context.SwapInterval != 0;
             }
-            
             set
             {
-                _view.Window.VSync = value ? OpenTK.VSyncMode.On : OpenTK.VSyncMode.Off;
+                var context = GraphicsContext.CurrentContext;
+                if (context != null)
+                {
+                    context.SwapInterval = value ? 1 : 0;
+                }
             }
         }
         
@@ -103,9 +109,8 @@ namespace Microsoft.Xna.Framework
             : base(game)
         {
             _view = new OpenTKGameWindow();
-            _view.Game = game;
             this.Window = _view;
-			
+
 			// Setup our OpenALSoundController to handle our SoundBuffer pools
             try
             {
@@ -135,14 +140,14 @@ namespace Microsoft.Xna.Framework
 #if WINDOWS
         protected override void OnIsMouseVisibleChanged()
         {
-            _view.MouseVisibleToggled();
+            _view.SetMouseVisible(IsMouseVisible);
         }
 #endif
 
         public override void RunLoop()
         {
             ResetWindowBounds(false);
-            _view.Window.Run(0);
+            _view.Run();
         }
 
         public override void StartRunLoop()
@@ -152,10 +157,10 @@ namespace Microsoft.Xna.Framework
         
         public override void Exit()
         {
-            if (!_view.Window.IsExiting)
+            if (_view.Window.Exists)
             {
                 Net.NetworkSession.Exit();
-                _view.Window.Exit();
+                _view.Window.Close();
             }
 #if LINUX
             Tao.Sdl.SdlMixer.Mix_CloseAudio();
@@ -288,9 +293,6 @@ namespace Microsoft.Xna.Framework
             var device = Game.GraphicsDevice;
             if (device != null)
                 device.Present();
-
-            if (_view != null)
-                _view.Window.SwapBuffers();
         }
 		
         protected override void Dispose(bool disposing)
