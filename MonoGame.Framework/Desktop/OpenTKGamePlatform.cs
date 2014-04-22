@@ -108,7 +108,7 @@ namespace Microsoft.Xna.Framework
 		public OpenTKGamePlatform(Game game)
             : base(game)
         {
-            _view = new OpenTKGameWindow();
+            _view = new OpenTKGameWindow(game);
             this.Window = _view;
 
 			// Setup our OpenALSoundController to handle our SoundBuffer pools
