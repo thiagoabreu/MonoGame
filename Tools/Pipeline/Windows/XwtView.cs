@@ -554,6 +554,7 @@ namespace MonoGame.Tools.Pipeline
             _treeView = new TreeView(_store)
             {
 				HeadersVisible = false,
+				MinHeight = 100
 			};
             _treeView.Columns.Add("Name", imgCol, nameCol);
             
@@ -565,7 +566,7 @@ namespace MonoGame.Tools.Pipeline
             leftPane.Panel1.Content = _treeView;
 
             // Placeholder vbox until a property grid is in place
-            leftPane.Panel2.Content = new VBox();
+			leftPane.Panel2.Content = new PropertyGrid();
 
 			mainPaned.Panel1.Content = leftPane;
 			_outputWindow = new OutputTextView();

@@ -136,6 +136,7 @@
     </None>
     <Compile Include="Windows\XwtView.cs" />
     <Compile Include="Windows\OutputTextView.cs" />
+    <Compile Include="Windows\PropertyGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
