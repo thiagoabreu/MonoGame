@@ -569,9 +569,11 @@ namespace MonoGame.Tools.Pipeline
 			leftPane.Panel2.Content = new PropertyGrid();
 
 			mainPaned.Panel1.Content = leftPane;
-			_outputWindow = new OutputTextView();
 
-			mainPaned.Panel2.Content = _outputWindow;
+			_outputWindow = new OutputTextView();
+			var outputScroll = new ScrollView(_outputWindow);
+
+			mainPaned.Panel2.Content = outputScroll;
 			Content = mainPaned;
 
             // Make the left pane 1/3 of the width by default
