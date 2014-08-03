@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Xwt;
 
 namespace MonoGame.Tools.Pipeline
@@ -10,9 +11,9 @@ namespace MonoGame.Tools.Pipeline
 
 		VBox _propertyList;
 
-		SortStyle _sorted;
+		//SortStyle _sorted;
 
-		//object _propertyObject;
+		object _propertyObject;
 
 		public PropertyGrid()
 		{
@@ -36,6 +37,8 @@ namespace MonoGame.Tools.Pipeline
 			PopulateMockList();
 		}
 
+		public object PropertyObject {			get;			set;		}
+
 		enum SortStyle 
 		{
 			Categories,
@@ -56,21 +59,21 @@ namespace MonoGame.Tools.Pipeline
 		}
 
 		void SelectedSort(SortStyle style) {
-			_sorted = style;
-
-			switch (style) {
-			case SortStyle.Alphabetic:
-				_catButton.Active = false;
-				_alphButton.Active = true;
-				break;
-			case SortStyle.Categories:
-				_alphButton.Active = false;
-				_catButton.Active = true;
-				break;
-			default:
-				// Should not enter here.
-				break;
-			}
+//			_sorted = style;
+//
+//			switch (style) {
+//			case SortStyle.Alphabetic:
+//				_catButton.Active = false;
+//				_alphButton.Active = true;
+//				break;
+//			case SortStyle.Categories:
+//				_alphButton.Active = false;
+//				_catButton.Active = true;
+//				break;
+//			default:
+//				// Should not enter here.
+//				break;
+//			}
 		}
 
 		void PopulateMockList() {
@@ -83,27 +86,80 @@ namespace MonoGame.Tools.Pipeline
 					MarginLeft = 6
 				};
 
+				int currentLine = 0;
+
 				var firstTable = new Table() {
 					DefaultRowSpacing = 1
 				};
-				firstTable.Add(new Label("Name"), 0, 1, hpos: WidgetPlacement.End, hexpand: true);
-				firstTable.Add(new TextEntry() { Text = "New Name" }, 1, 1, hpos: WidgetPlacement.Fill, hexpand: true);
-				firstTable.Add(new Label("Type"), 0, 2, hpos: WidgetPlacement.End);
-				firstTable.Add(new TextEntry() { Text = "Obj Type", Sensitive = false, ExpandHorizontal=true }, 1, 2, hpos: WidgetPlacement.Fill);
-				firstTable.Add(new Label("Select"), 0, 3, hpos: WidgetPlacement.End);
 
-				var cbe = new ComboBoxEntry();
-				cbe.Items.Add("One");
-				cbe.Items.Add("Two");
-				cbe.Items.Add("Three");
-				cbe.SelectedIndex = 0;
-				firstTable.Add(cbe, 1, 3, hpos: WidgetPlacement.Fill);
-
-				firstTable.Add(new Label("Color"), 0, 4, hpos: WidgetPlacement.End);
-				firstTable.Add(new ColorEntry(), 1, 4, hpos: WidgetPlacement.Fill);
+				addEntry (firstTable, currentLine++, "Name", EntryType.Text);
+				addEntry (firstTable, currentLine++, "Type", EntryType.Readonly);
+				addEntry (firstTable, currentLine++, "Combo", EntryType.Combo);
+				addEntry (firstTable, currentLine++, "Color", EntryType.Color);
+				addEntry (firstTable, currentLine++, "Content", EntryType.LongText);
+				addEntry (firstTable, currentLine++, "Active", EntryType.Check);
 
 				firstExpander.Content = firstTable;
 				_propertyList.PackStart(firstExpander);
+			}
+		}
+
+		enum EntryType {
+			Text,
+			Readonly,
+			LongText,
+			Color,
+			Combo,
+			Check
+		}
+
+		void addEntry(Table table, int line, string label, EntryType type) {
+			table.Add(new Label(label), 0, line, hpos: WidgetPlacement.End, hexpand: true);
+
+			Widget entry;
+			switch (type) {
+			case EntryType.Text:
+				entry = new TextEntry () { Text = "Name" };
+				break;
+			case EntryType.Readonly:
+				entry = new TextEntry () {
+					Text = "Obj",
+					Sensitive = false
+				};
+				break;
+			case EntryType.LongText:
+				entry = new LongTextEntry ("this is a long text");
+				break;
+			case EntryType.Color:
+				entry = new ColorEntry ();
+				break;
+			case EntryType.Combo:
+				var cbe = new ComboBoxEntry ();
+				cbe.Items.Add ("One");
+				cbe.Items.Add ("Two");
+				cbe.Items.Add ("Three");
+				cbe.SelectedIndex = 0;
+				entry = cbe;
+				break;
+			case EntryType.Check:
+				entry = new CheckBox () {
+					Active = true
+				};
+				break;
+			default:
+				// Shouldn't get here
+				entry = null;
+				break;
+			}
+
+			table.Add (entry, 1, line, hpos: WidgetPlacement.Fill, hexpand: true);
+		}
+
+		void PopulatePropertyList() {
+			Type typeOfObject = _propertyObject.GetType ();
+
+			foreach (var prop in typeOfObject.GetProperties()) {
+				//TODO List the properties
 			}
 		}
 	}
@@ -115,7 +171,10 @@ namespace MonoGame.Tools.Pipeline
 
 		public DialogEntry(string text = "") {
 			_textEntry = new TextEntry();
-			_button = new Button("...");
+			_button = new Button(){
+				Style = ButtonStyle.Flat,
+				Label = "..."
+			};
 
 			PackEnd(_button);
 			PackStart(_textEntry, true);
@@ -133,10 +192,55 @@ namespace MonoGame.Tools.Pipeline
 			var colorDialog = new SelectColorDialog() {
 				SupportsAlpha = true
 			};
-			colorDialog.Run();
 
-			var color = colorDialog.Color;
-			_textEntry.Text = color.ToString();
+			if (colorDialog.Run ()) {
+				var color = colorDialog.Color;
+				// TODO Create a translator XwtColor -> RGB(A)
+				_textEntry.Text = color.ToString ();
+			}
+		}
+	}
+
+	class LongTextEntry : DialogEntry {
+		public LongTextEntry(string text = "") : base(text) {
+			_button.Clicked += ShowDialog;
+			_textEntry.Text = text;
+		}
+
+		void ShowDialog (object sender, EventArgs e)
+		{
+			var dialog = new LongTextDialog (_textEntry.Text);
+
+			if (dialog.Run () == Command.Ok)
+				_textEntry.Text = dialog.Text;
+			dialog.Hide ();
+		}
+	}
+
+	class LongTextDialog : Dialog {
+
+		TextEntry _textEntry;
+
+		public LongTextDialog(string text = "") : base() {
+			// TODO See if the Xwt corrects the multiline bug on GTK
+			_textEntry = new TextEntry () {
+				MultiLine = true,
+				MinHeight = 100,
+				MinWidth = 200,
+				Text = text
+			};
+
+			Content = _textEntry;
+
+			var okButton = new DialogButton ("OK", Command.Ok);
+			var cancelButton = new DialogButton("Cancel", Command.Cancel);
+
+			Buttons.Add (okButton);
+			Buttons.Add (cancelButton);
+		}
+
+		public string Text {
+			get { return _textEntry.Text; }
 		}
 	}
 

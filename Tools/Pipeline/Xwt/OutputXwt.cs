@@ -14,10 +14,12 @@ namespace MonoGame.Tools.Pipeline
         {
             ReadOnly = true;
 			ShowFrame = false;
+			// TODO Multiline doesn't work on GTK yet. 
+			// Wait for the Xwt to fix this (in progress)
             MultiLine = true;
 			//HeightRequest = (double)500;
             ExpandHorizontal = true;
-			//ExpandVertical = true;
+			ExpandVertical = true;
 			TextAlignment = Alignment.Start;
 
 			var faces = new[] { "Consolas", "Lucida Console", "Courier New", "Monospace" };
