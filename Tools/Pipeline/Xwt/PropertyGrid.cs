@@ -95,7 +95,7 @@ namespace MonoGame.Tools.Pipeline
 				addEntry (firstTable, currentLine++, "Name", EntryType.Text);
 				addEntry (firstTable, currentLine++, "Type", EntryType.Readonly);
 				addEntry (firstTable, currentLine++, "Combo", EntryType.Combo);
-				addEntry (firstTable, currentLine++, "Color", EntryType.Color);
+				addEntry (firstTable, currentLine++, "Color (RGBA)", EntryType.Color);
 				addEntry (firstTable, currentLine++, "Content", EntryType.LongText);
 				addEntry (firstTable, currentLine++, "Active", EntryType.Check);
 
@@ -180,6 +180,11 @@ namespace MonoGame.Tools.Pipeline
 			PackStart(_textEntry, true);
 
 		}
+
+		public string Text {
+			get { return _textEntry.Text; }
+			set { _textEntry.Text = value; }
+		}
 	}
 
 	class ColorEntry : DialogEntry {
@@ -190,13 +195,21 @@ namespace MonoGame.Tools.Pipeline
 		void ShowColorDialog (object sender, EventArgs e)
 		{
 			var colorDialog = new SelectColorDialog() {
-				SupportsAlpha = true
+				SupportsAlpha = true,
+				// FIXME Uncomment the next line when updated with Xwt
+				//Color = Xwt.Drawing.Color.FromHex(Text);
 			};
 
 			if (colorDialog.Run ()) {
 				var color = colorDialog.Color;
-				// TODO Create a translator XwtColor -> RGB(A)
-				_textEntry.Text = color.ToString ();
+
+				// FIXME Use the next line instead when updated with Xwt
+				// _textEntry.Text = color.ToHexString ().ToUpper ();
+				_textEntry.Text = "#"
+					+ ((int)(color.Red * 255)).ToString ("X2")
+					+ ((int)(color.Green * 255)).ToString ("X2")
+					+ ((int)(color.Blue * 255)).ToString ("X2")
+					+ ((int)(color.Alpha * 255)).ToString ("X2");
 			}
 		}
 	}
