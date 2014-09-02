@@ -34,7 +34,9 @@ namespace MonoGame.Tools.Pipeline
 
 //			if (_propertyObject != null)
 //				PopulatePropertyList();
-			PopulateMockList();
+
+			//PopulateMockList();
+
 		}
 
 		public object PropertyObject {			get;			set;		}
@@ -138,7 +140,9 @@ namespace MonoGame.Tools.Pipeline
 				cbe.Items.Add ("One");
 				cbe.Items.Add ("Two");
 				cbe.Items.Add ("Three");
-				cbe.SelectedIndex = 0;
+
+				//cbe.SelectedIndex = 0;
+
 				entry = cbe;
 				break;
 			case EntryType.Check:
