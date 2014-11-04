@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <configuration>
+    <images-root-path>..</images-root-path>
+    <target-gtk-version>2.12</target-gtk-version>
+  </configuration>
+  <import>
+    <widget-library name="../bin/Linux/AnyCPU/Debug/Pipeline.exe" internal="true" />
+  </import>
+  <widget class="Gtk.Window" id="MonoGame.Tools.Pipeline.GtkView" design-size="473 300">
+    <action-group name="Default">
+      <action id="FileAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">File</property>
+        <property name="ShortLabel" translatable="yes">File</property>
+        <property name="StockId">gtk-file</property>
+      </action>
+      <action id="newAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_New</property>
+        <property name="ShortLabel" translatable="yes">_New</property>
+        <property name="StockId">gtk-new</property>
+        <signal name="Activated" handler="OnNewActionActivated" />
+      </action>
+      <action id="openAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Abrir...</property>
+        <property name="ShortLabel" translatable="yes">_Abrir...</property>
+        <property name="StockId">gtk-open</property>
+        <signal name="Activated" handler="OnOpenActionActivated" />
+      </action>
+      <action id="closeAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Fechar</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">_Fechar</property>
+        <property name="StockId">gtk-close</property>
+        <signal name="Activated" handler="OnCloseActionActivated" />
+      </action>
+      <action id="quitAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">E_xit</property>
+        <property name="ShortLabel" translatable="yes">E_xit</property>
+        <property name="StockId">gtk-quit</property>
+        <signal name="Activated" handler="OnQuitActionActivated" />
+      </action>
+      <action id="ImportAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Import...</property>
+        <property name="ShortLabel" translatable="yes">Import...</property>
+        <signal name="Activated" handler="OnImportActionActivated" />
+      </action>
+      <action id="saveAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Save</property>
+        <property name="ShortLabel" translatable="yes">_Save</property>
+        <property name="StockId">gtk-save</property>
+        <signal name="Activated" handler="OnSaveActionActivated" />
+      </action>
+      <action id="saveAsAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Save as...</property>
+        <property name="ShortLabel" translatable="yes">Save as...</property>
+        <property name="StockId">gtk-save-as</property>
+        <signal name="Activated" handler="OnSaveAsActionActivated" />
+      </action>
+      <action id="EditAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Edit</property>
+        <property name="ShortLabel" translatable="yes">Edit</property>
+      </action>
+      <action id="undoAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Desfa_zer</property>
+        <property name="ShortLabel" translatable="yes">Desfa_zer</property>
+        <property name="StockId">gtk-undo</property>
+        <signal name="Activated" handler="OnUndoActionActivated" />
+      </action>
+      <action id="redoAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Refazer</property>
+        <property name="ShortLabel" translatable="yes">_Refazer</property>
+        <property name="StockId">gtk-redo</property>
+        <signal name="Activated" handler="OnRedoActionActivated" />
+      </action>
+      <action id="addAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">New Item</property>
+        <property name="ShortLabel" translatable="yes">New Item</property>
+        <property name="StockId">gtk-add</property>
+        <signal name="Activated" handler="OnAddActionActivated" />
+      </action>
+      <action id="AddItemAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Add Item</property>
+        <property name="ShortLabel" translatable="yes">Add Item</property>
+        <signal name="Activated" handler="OnAddItemActionActivated" />
+      </action>
+      <action id="removeAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Delete Item</property>
+        <property name="ShortLabel" translatable="yes">Delete Item</property>
+        <property name="StockId">gtk-remove</property>
+        <signal name="Activated" handler="OnRemoveActionActivated" />
+      </action>
+      <action id="BuildAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Build</property>
+        <property name="ShortLabel" translatable="yes">Build</property>
+      </action>
+      <action id="executeAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Build</property>
+        <property name="ShortLabel" translatable="yes">Build</property>
+        <property name="StockId">gtk-execute</property>
+        <signal name="Activated" handler="OnExecuteActionActivated" />
+      </action>
+      <action id="refreshAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Rebuild</property>
+        <property name="ShortLabel" translatable="yes">Rebuild</property>
+        <property name="StockId">gtk-refresh</property>
+        <signal name="Activated" handler="OnRefreshActionActivated" />
+      </action>
+      <action id="clearAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Clean</property>
+        <property name="ShortLabel" translatable="yes">Clean</property>
+        <property name="StockId">gtk-clear</property>
+      </action>
+      <action id="stopAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Cancel</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Cancel</property>
+        <property name="StockId">gtk-stop</property>
+        <property name="Visible">False</property>
+      </action>
+      <action id="DebugModeAction">
+        <property name="Type">Toggle</property>
+        <property name="Label" translatable="yes">Debug Mode</property>
+        <property name="ShortLabel" translatable="yes">Debug Mode</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+      </action>
+      <action id="HelpMenu">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Help</property>
+        <property name="ShortLabel" translatable="yes">Help</property>
+        <property name="StockId">gtk-help</property>
+      </action>
+      <action id="helpAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">View Help...</property>
+        <property name="ShortLabel" translatable="yes">View Help...</property>
+        <property name="StockId">gtk-help</property>
+      </action>
+      <action id="aboutAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">About</property>
+        <property name="ShortLabel" translatable="yes">About</property>
+        <property name="StockId">gtk-about</property>
+      </action>
+    </action-group>
+    <property name="MemberName" />
+    <property name="GeneratePublic">False</property>
+    <property name="Title" translatable="yes">Monogame Pipeline Builder</property>
+    <property name="WindowPosition">Center</property>
+    <property name="DefaultWidth">800</property>
+    <property name="DefaultHeight">600</property>
+    <child>
+      <widget class="Gtk.VBox" id="vbox1">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.MenuBar" id="menubar">
+            <property name="MemberName" />
+            <node name="menubar" type="Menubar">
+              <node type="Menu" action="FileAction">
+                <node type="Menuitem" action="newAction" />
+                <node type="Menuitem" action="openAction" />
+                <node type="Menuitem" action="closeAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="ImportAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="saveAction" />
+                <node type="Menuitem" action="saveAsAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="quitAction" />
+              </node>
+              <node type="Menu" action="EditAction">
+                <node type="Menuitem" action="undoAction" />
+                <node type="Menuitem" action="redoAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="addAction" />
+                <node type="Menuitem" action="AddItemAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="removeAction" />
+              </node>
+              <node type="Menu" action="BuildAction">
+                <node type="Menuitem" action="executeAction" />
+                <node type="Menuitem" action="refreshAction" />
+                <node type="Menuitem" action="clearAction" />
+                <node type="Menuitem" action="stopAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="DebugModeAction" />
+              </node>
+              <node type="Menu" action="HelpMenu">
+                <node type="Menuitem" action="helpAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="aboutAction" />
+              </node>
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HPaned" id="mainPaned">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Position">196</property>
+            <child>
+              <widget class="Gtk.VPaned" id="vpaned1">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Position">76</property>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+                    <property name="MemberName" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TreeView" id="_treeView">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Reorderable">True</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Resize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Fixed" id="fixed1">
+                    <property name="MemberName" />
+                    <property name="HasWindow">False</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="Resize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
+                <property name="MemberName" />
+                <property name="ShadowType">In</property>
+                <child>
+                  <widget class="Gtk.TextView" id="outputView">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="ShowScrollbars">True</property>
+                    <property name="Editable">False</property>
+                    <property name="CursorVisible">False</property>
+                    <property name="Text" translatable="yes" />
+                    <property name="WrapMode">WordChar</property>
+                    <property name="PixelsAboveLines">12</property>
+                    <property name="LeftMargin">12</property>
+                    <property name="RightMargin">12</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder />
+        </child>
+      </widget>
+    </child>
+  </widget>
+</stetic-interface>
